@@ -1,14 +1,23 @@
 <template>
     <div>
-
+        <ul>
+            <movie-row v-for="movie in movies" :key="movie.id" :movie="movie"></movie-row>
+        </ul>
     </div>
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
+    import MovieRow from './MovieRow';
 
     export default {
         name: 'AppMovies',
+        components: {
+            MovieRow
+        },
+        computed: {
+            ...mapGetters(['movies'])
+        },
         methods: {
             ...mapActions(['getMovies'])
         },
