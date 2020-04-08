@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul>
-            <movie-row v-for="movie in movies" :key="movie.id" :movie="movie"></movie-row>
+            <movie-row v-for="movie in moviesForCurrentPage" :key="movie.id" :movie="movie"></movie-row>
         </ul>
     </div>
 </template>
@@ -16,7 +16,7 @@
             MovieRow
         },
         computed: {
-            ...mapGetters(['movies'])
+            ...mapGetters(['moviesForCurrentPage'])
         },
         methods: {
             ...mapActions(['getMovies'])

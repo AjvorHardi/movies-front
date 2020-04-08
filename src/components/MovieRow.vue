@@ -6,6 +6,7 @@
         <td>{{movie.releaseDate}}</td>
         <td>{{movie.duration}}</td>
 
+
     </tr>
 </template>
 
