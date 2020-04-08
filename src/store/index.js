@@ -9,7 +9,8 @@ export const store = new Vuex.Store({
     state: {
         movies: [],
         searchTerm: "",
-        currentPage: 1
+        currentPage: 1,
+        selected: []
     },
     getters: {
         movies: state => state.movies,
@@ -21,6 +22,7 @@ export const store = new Vuex.Store({
         },
         searchTerm: state => state.searchTerm,
         currentPage: state => state.currentPage,
+        selected: state => state.selected,
         moviesForCurrentPage: (state, {searchedMovies}) => {
             const movies = searchedMovies(state.searchTerm);
             console.log(movies);
@@ -44,6 +46,9 @@ export const store = new Vuex.Store({
         },
         prevPage({commit}) {
             commit('prevPage')
+        },
+        setSelectedMovie({commit}, movieToSelect) {
+            commit('setSelectedMovie', movieToSelect)
         }
     },
     mutations: {
@@ -59,6 +64,11 @@ export const store = new Vuex.Store({
         },
         prevPage(state) {
             state.currentPage--
+        },
+        setSelectedMovie(state, movieToSelect) {
+            if(state.selected.indexOf(movieToSelect) === -1) {
+                state.selected.push(movieToSelect);
+            }
         }
     }
 })

@@ -1,7 +1,11 @@
 <template>
     <div>
         <ul>
-            <movie-row v-for="movie in moviesForCurrentPage" :key="movie.id" :movie="movie"></movie-row>
+            <movie-row 
+                v-for="movie in moviesForCurrentPage" 
+                :key="movie.id" 
+                :movie="movie">
+            </movie-row>
         </ul>
         <p v-if="!searchedMovies(searchTerm).length">Nema pronadjenih filmova</p>
         <ul class="pagination">
@@ -15,6 +19,7 @@
                     <button @click="paginateNext" class="page-link">Next</button>
                 </li>
             </ul>
+        <p>Broj selektovanih: {{ selected.length }} </p>
     </div>
 </template>
 
@@ -28,7 +33,7 @@
             MovieRow
         },
         computed: {
-            ...mapGetters(['moviesForCurrentPage', 'searchedMovies', 'searchTerm', 'currentPage'])
+            ...mapGetters(['moviesForCurrentPage', 'searchedMovies', 'searchTerm', 'currentPage', 'selected'])
         },
         methods: {
             ...mapActions(['getMovies', 'prevPage', 'nextPage']),
