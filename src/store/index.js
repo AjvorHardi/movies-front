@@ -20,6 +20,7 @@ export const store = new Vuex.Store({
             }
         },
         searchTerm: state => state.searchTerm,
+        currentPage: state => state.currentPage,
         moviesForCurrentPage: (state, {searchedMovies}) => {
             const movies = searchedMovies(state.searchTerm);
             console.log(movies);
@@ -37,6 +38,12 @@ export const store = new Vuex.Store({
         },
         setSearchTerm({commit}, searchTerm) {
             commit('setSearchTerm', searchTerm);
+        },
+        nextPage({commit}) {
+            commit('nextPage')
+        },
+        prevPage({commit}) {
+            commit('prevPage')
         }
     },
     mutations: {
@@ -46,6 +53,12 @@ export const store = new Vuex.Store({
         setSearchTerm(state, searchTerm) {
             state.searchTerm = searchTerm;
             console.log(searchTerm);
+        },
+        nextPage(state) {
+            state.currentPage++
+        },
+        prevPage(state) {
+            state.currentPage--
         }
     }
 })
