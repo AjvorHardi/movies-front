@@ -3,6 +3,7 @@
         <ul>
             <movie-row v-for="movie in moviesForCurrentPage" :key="movie.id" :movie="movie"></movie-row>
         </ul>
+        <p v-if="!searchedMovies(searchTerm).length">Nema pronadjenih filmova</p>
     </div>
 </template>
 
@@ -16,7 +17,7 @@
             MovieRow
         },
         computed: {
-            ...mapGetters(['moviesForCurrentPage'])
+            ...mapGetters(['moviesForCurrentPage', 'searchedMovies', 'searchTerm'])
         },
         methods: {
             ...mapActions(['getMovies'])
