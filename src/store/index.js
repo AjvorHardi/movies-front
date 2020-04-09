@@ -25,7 +25,6 @@ export const store = new Vuex.Store({
         selected: state => state.selected,
         moviesForCurrentPage: (state, {searchedMovies}) => {
             const movies = searchedMovies(state.searchTerm);
-            console.log(movies);
             const startIndex = (state.currentPage - 1) * 5;
             const endIndex = startIndex + 5;
             return movies.slice(startIndex, endIndex)
@@ -34,7 +33,6 @@ export const store = new Vuex.Store({
     },
     actions: {
         async getMovies({commit}) {
-            console.log("usao u akciju");
             const movies = await moviesService.getAll();
             commit('setMovies', movies);
         },
@@ -49,6 +47,12 @@ export const store = new Vuex.Store({
         },
         setSelectedMovie({commit}, movieToSelect) {
             commit('setSelectedMovie', movieToSelect)
+        },
+        setSelectedAllMovies({commit}) {
+            commit('setSelectedAllMovies')
+        },
+        setUnselectedAllMovies({commit}) {
+            commit('setUnselectedAllMovies')
         }
     },
     mutations: {
@@ -69,6 +73,12 @@ export const store = new Vuex.Store({
             if(state.selected.indexOf(movieToSelect) === -1) {
                 state.selected.push(movieToSelect);
             }
+        },
+        setSelectedAllMovies(state) {
+            state.selected = state.movies;
+        },
+        setUnselectedAllMovies(state) {
+            state.selected = [];
         }
     }
 })

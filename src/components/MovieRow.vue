@@ -1,22 +1,31 @@
 <template>
-    <tr :class="klasa">
+    <tr :class="classSelected">
         <td>{{movie.id}}</td>
         <td>{{movie.title}}</td>
         <td>{{movie.director}}</td>
-        <td>{{movie.releaseDate}}</td>
         <td>{{movie.duration}}</td>
+        <td>{{movie.releaseDate}}</td>
 
-        <button @click="selectMovie">Select</button>
+        <button :disabled="isSelected" @click="selectMovie">Select</button>
     </tr>
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapActions, mapGetters } from 'vuex'
 
     export default {
-        data() {
-            return {
-                klasa: ""
+       
+        computed: {
+            ...mapGetters(['selected']),
+            isSelected() {
+                return this.selected.indexOf(this.movie) !== -1
+            },
+            classSelected() {
+                if(this.isSelected) {
+                    return "bg-warning"
+                } else {
+                    return ""
+                }
             }
         },
         props: {
@@ -25,13 +34,15 @@
             },
             disabled: {
                 type: Boolean
+            },
+            klasa: {
+                type: String
             }
         },
         methods: {
             ...mapActions(['setSelectedMovie']),
             selectMovie() {
                 this.setSelectedMovie(this.movie);
-                this.klasa = "bg-warning";
             }
         },
     }

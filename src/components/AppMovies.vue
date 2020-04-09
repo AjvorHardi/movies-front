@@ -1,25 +1,41 @@
 <template>
     <div>
-        <ul>
-            <movie-row 
-                v-for="movie in moviesForCurrentPage" 
-                :key="movie.id" 
-                :movie="movie">
-            </movie-row>
-        </ul>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Director</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">ReleaseDate</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <movie-row 
+                    v-for="movie in moviesForCurrentPage" 
+                    :key="movie.id" 
+                    :movie="movie">
+                </movie-row>
+            </tbody>
+        </table>
         <p v-if="!searchedMovies(searchTerm).length">Nema pronadjenih filmova</p>
         <ul class="pagination">
-                <li class="page-item">
-                    <button @click="paginatePrev" class="page-link">Previous</button>
-                </li>
-                <li class="page-item active">
-                    <p class="page-link" >{{currentPage}}</p>
-                </li>
-                <li class="page-item">
-                    <button @click="paginateNext" class="page-link">Next</button>
-                </li>
-            </ul>
+            <li class="page-item">
+                <button @click="paginatePrev" class="page-link">Previous</button>
+            </li>
+            <li class="page-item active">
+                <p class="page-link" >{{currentPage}}</p>
+            </li>
+            <li class="page-item">
+                <button @click="paginateNext" class="page-link">Next</button>
+            </li>
+        </ul>
         <p>Broj selektovanih: {{ selected.length }} </p>
+        
+        <button @click="selectAllMovies">Select All</button>
+        <button @click="deselectAllMovies">Deselect All</button>
     </div>
 </template>
 
@@ -29,6 +45,11 @@
 
     export default {
         name: 'AppMovies',
+        data() {
+            return {
+                klasa: ""
+            }
+        },
         components: {
             MovieRow
         },
@@ -36,12 +57,18 @@
             ...mapGetters(['moviesForCurrentPage', 'searchedMovies', 'searchTerm', 'currentPage', 'selected'])
         },
         methods: {
-            ...mapActions(['getMovies', 'prevPage', 'nextPage']),
+            ...mapActions(['getMovies', 'prevPage', 'nextPage', 'setSelectedAllMovies', 'setUnselectedAllMovies']),
             paginatePrev() {
                 this.prevPage();
             },
             paginateNext() {
                 this.nextPage();
+            },
+            selectAllMovies() {
+                this.setSelectedAllMovies();
+            },
+            deselectAllMovies() {
+                this.setUnselectedAllMovies();
             }
         },
 
