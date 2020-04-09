@@ -36,6 +36,11 @@
         
         <button @click="selectAllMovies">Select All</button>
         <button @click="deselectAllMovies">Deselect All</button>
+        
+        <button @click="sort({type: 'title', isAsc: true})">Sort by Name asc</button>
+        <button @click="sort({type: 'title', isAsc: false})">Sort by Name desc</button>
+        <button @click="sort({type: 'duration', isAsc: true})">Sort by Duration asc</button>
+        <button @click="sort({type: 'duration', isAsc: false})">Sort by Duration desc</button>
     </div>
 </template>
 
@@ -45,11 +50,6 @@
 
     export default {
         name: 'AppMovies',
-        data() {
-            return {
-                klasa: ""
-            }
-        },
         components: {
             MovieRow
         },
@@ -57,7 +57,7 @@
             ...mapGetters(['moviesForCurrentPage', 'searchedMovies', 'searchTerm', 'currentPage', 'selected'])
         },
         methods: {
-            ...mapActions(['getMovies', 'prevPage', 'nextPage', 'setSelectedAllMovies', 'setUnselectedAllMovies']),
+            ...mapActions(['getMovies', 'prevPage', 'nextPage', 'setSelectedAllMovies', 'setUnselectedAllMovies', 'sortMovies']),
             paginatePrev() {
                 this.prevPage();
             },
@@ -69,6 +69,9 @@
             },
             deselectAllMovies() {
                 this.setUnselectedAllMovies();
+            },
+            sort(sortConfig) {
+                this.sortMovies(sortConfig);
             }
         },
 

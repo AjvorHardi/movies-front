@@ -34,9 +34,6 @@
             },
             disabled: {
                 type: Boolean
-            },
-            klasa: {
-                type: String
             }
         },
         methods: {
